@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Gadget électroniques</title>
+</head>
+<body>
+    <div class = container-menu id="top">
+        <div class="nav-wrapper">
+            <div class="left-side">
+                <div class="menu-button">
+                    <button onclick="myFunction()" class="dropbtn"><i class="fa fa-bars"></i></button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="#Ordinateur-portable">Ordinateur portable</a>
+                        <a href="#Ordinateur-fixe">Ordinateur fixe</a>
+                        <a href="#ecran-pc-fixe">ecran pc fixe</a>
+                        <a href="#sourie">Souries</a>
+                        <a href="#clavier">Clavier</a>
+                        <a href="#chaise">Chaise gaming</a>
+                        <a href="#casque">Casque</a>
+                    </div>
+
+                </div>
+                <div class="nav-link-wrapper">
+                    <a href="menu.ejs">Menu</a>
+                </div>
+                <div class="nav-link-wrapper">
+                    <a href="Portefeuille.html">Portefeuille</a>
+                </div>
+                <div class="nav-link-wrapper">
+                    <a href="login.ejs">Se connecter</a>
+                </div>
+                <div class="nav-link-wrapper">
+                    <a href="Commandes.ejs">Commandes</a>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search.." style="width:600px;height:40px;">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </div>
+                <div class="nav-link-wrapper">
+                    <p>Utilisateur</p>
+                </div>
+
+
+            </div>
+
+            <div class="right-side">
+                <div class="shopping-cart">
+                    <a href="panier.ejs">
+                        <img src="../public/shopping-cart.png" style="width:40px;height:30px;">
+                    </a>
+                    <div>
+                        <b><p>0</p></b>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+    /*https://www.w3schools.com/howto/howto_js_dropdown.asp*/
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("menu-button");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+</script>
+
+</html>

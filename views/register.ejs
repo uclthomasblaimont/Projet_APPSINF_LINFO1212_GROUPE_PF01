@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Login</title>
+</head>
+<body>
+<video autoplay muted loop id="myVideo">
+    <source src="video/video.mp4" type="video/mp4">
+</video>
+<%-include("banner.ejs", {}) %>
+<div class="content-login">
+    <div class="login-container">
+        <%if (error1 !== ""){ %>
+            <h3>
+                  <span id="error">
+                    <div class="mes-err">
+                      <%= error1 %>
+                    </div>
+                  </span>
+            </h3>
+        <%}%>
+        <form method="post" action="/register">
+            <b><p>Pseudo :</p></b>
+            <input type="text" id="username" name="username" placeholder="Pseudo" required>
+            <br>
+            <b><p>Mot de passe :</p></b>
+            <input type="text" id="password" name="password" placeholder="Mot de passe" required>
+            <br>
+            <b><p>Adresse :</p></b>
+            <input type="text" id="adresse" name="adresse" placeholder="Adresse" required>
+            <br>
+            <br>
+            <a href="/login">
+                <input type="submit" value="Connexion"><br><br>
+            </a>
+        </form>
+
+
+    </div>
+
+</div>
+</body>
+</html>

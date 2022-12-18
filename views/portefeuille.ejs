@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Portefeuille</title>
+</head>
+<body>
+    <%-include("banner.ejs", {}) %>
+    <div class="content-payment">
+        <div class="payment-container">
+            <b><p>Montant actuel:</p></b>
+            <% if (username !== undefined) {%>
+                <div> <%= money + " €"%> </div>
+            <% } else { %>
+                <p><div>0 €</div></p>
+            <% } %>
+            <b><p>Ajouter un montant</p></b>
+                <form method="post" action="/portefeuille">
+                    <input type="number" id="argent" name="argent"  placeholder="entre 0 et 500 €" min="1" max="500">
+                    <input type="submit" value="Ajouter"><br><br>
+                </form>
+
+                <form method="post" action="/portefeuille">
+                    <b><p>Retirer un montant</p></b>
+                    <input type="number" id="argent2" name="argent2" placeholder="maximum le montant du compte" min="0" max=<%= money %>>
+                    <input type="submit" value="Retirer"><br><br>
+                </form>
+        </div>
+    </div>
+</body>
+<script>
+    /*https://www.w3schools.com/howto/howto_js_dropdown.asp*/
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("menu-button");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Login</title>
+</head>
+<body>
+<%-include("banner.ejs", {}) %>
+<div class="content-login">
+    <div class="login-container">
+        <%if (error3 !== ""){ %>
+            <h3>
+                  <span id="error">
+                    <div class="mes-err">
+                      <%= error3 %>
+                    </div>
+                  </span>
+            </h3>
+        <%}%>
+        <form method="post" action="/settingProfils">
+            <b><p>Changer de pseudo :</p></b>
+            <input type="text" id="newusername" name="newusername" placeholder="Nouveau pseudo">
+            <br>
+
+            <b><p>changer de mot de passe :</p></b>
+            <input type="text" id="newpassword" name="newpassword" placeholder="Nouveau mot de passe">
+            <br>
+
+            <b><p>Changer d'adresse :</p></b>
+            <input type="text" id="newadresse" name="newadresse" placeholder="Nouvelle adresse">
+            <br>
+            <br>
+            <a href="/">
+                <input type="submit" value="Changer"><br><br>
+            </a>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Ordinateurs et accessoires</title>
+</head>
+<body>
+  <%-include("banner.ejs", {}) %>
+    <div class="content-ordi-accesoire">
+      <b><p>Ordinateur portable</p></b>
+      <div class="Ordinateur-accesoire-position" id="Ordinateur-portable">
+        <%-include("product.ejs", {product:products1}) %>
+      </div>
+      <b><p>Ordinateur fixe</p></b>
+      <div class="Ordinateur-accesoire-position" id="Ordinateur-fixe">
+        <%-include("product.ejs", {product:products2}) %>
+      </div>
+      <b><p>Ecran pour pc fixe</p></b>
+      <div class="Ordinateur-accesoire-position" id="ecran-pc-fixe">
+        <%-include("product.ejs", {product:products3}) %>
+      </div>
+      <b><p>Sourie</p></b>
+      <div class="Ordinateur-accesoire-position" id="sourie">
+        <%-include("product.ejs", {product:products4}) %>
+      </div>
+      <b><p>Clavier</p></b>
+      <div class="Ordinateur-accesoire-position" id="clavier">
+        <%-include("product.ejs", {product:products5}) %>
+      </div>
+      <b><p>Chaise Gaiming</p></b>
+      <div class="Ordinateur-accesoire-position" id="chaise">
+        <%-include("product.ejs", {product:products6}) %>
+      </div>
+      <b><p>Casque</p></b>
+      <div class="Ordinateur-accesoire-position" id="casque">
+        <%-include("product.ejs", {product:products7}) %>
+      </div>
+    </div>
+
+</body>
+
+<script>
+
+  /*https://www.w3schools.com/howto/howto_js_dropdown.asp*/
+  function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("menu-button");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+
+</script>
+
+</html>

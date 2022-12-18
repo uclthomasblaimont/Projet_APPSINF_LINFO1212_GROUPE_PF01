@@ -1,0 +1,13 @@
+Projet final :
+Description :
+
+E commerce:
+""Comme Amazon""
+Login :"S'il se connecte il aura accès à son compte avec l'argent qu'il peut déposer"
+Register
+Peut accéder au site quand il veut pas besoin de se loguer;connexion juste pour le Paypal
+Panier ( continuer les achats ou payer directement )
+
+Produits : que des produits technologiques ( pc , menuiserie , plomberie ). (cf Elie)
+
+!!!!Pas de vrai argent , simulation de Paypal (cf Benoit Duhoux)

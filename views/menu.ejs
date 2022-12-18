@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Home</title>
+</head>
+<body>
+    <%-include("banner.ejs", {}) %>
+    <br>
+    <% for(let i = 0; i < data.length; i++){ %>
+        <div class="cards">
+            <div class="card">
+
+                <img class="card__image"src=<%- data[i].image %>>
+
+                <div class="card__content">
+
+                    <p><%- data[i].name%></p>
+
+                    <p><%- data[i].description %><br><br><b><%- data[i].price %>€</b></p>
+
+                    <div class="card__info">
+
+                        <input type="submit" name="laptop1" class="button2" value="Acheter">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    <% } %>
+    <div class="buttom-container">
+        <div class="top-button">
+            <a href="#top">Retour en haut</a>
+        </div>
+    </div>
+</body>
+</html>

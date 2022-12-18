@@ -1,0 +1,11 @@
+Description de Thomas Blaimont : 
+
+Nous avions chacun une tâche spécifique .
+La mienne était de gérer la base de données et les différents chemin de notre index.js.
+Le début était difficile pour implémenter la db , ensuite pour créer les différentes routes avec les différentes pages web . Mais je me suis débrouiller en lisant énormément de documentation sur Sequelize et pour le Javascript ( Node.js) , j’ai regardé beaucoup de vidéos YTB.
+Cependant j’ai implémentée en mode « step by step ».
+Premièrement je devais créer la base de données et la connecter avec mon index.js.
+Deuxièmement j’ai créer les différents chemins pour que les sites communiquent entre eux ( j’ai utilisé les app.post , app.get , avec  req.session et req.body pour conserver les données).
+Troisièmement pour récupérer les différentes données j’ai du implémenter les fonctions getUser , getIncidents , AddUser , AddIncident.
+
+Pour la suite j’ai réglé les différents détails avec le reste de mon groupe.
