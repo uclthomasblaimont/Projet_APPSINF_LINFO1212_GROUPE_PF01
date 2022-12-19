@@ -40,7 +40,6 @@ let db = require("./db")
 const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey} = require("./db");
 const {updateMoney, updateMoney2,updateProfils} = require("./db");
 
-
 ///////////////////////////////////////////////////////////
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -151,10 +150,10 @@ app.get("/settingProfils",async (req, res)=>{
 app.get("/add_product",async (req,res)=>{
     res.render('add_product',{username:req.session.username});
 })
-app.get("/detail/:proid",async (req,res)=>{
+app.get("/details_product/:proid",async (req,res)=>{
     let products;
     products=await db.viewsdetailsproduct(req.params.proid);
-    res.render("detail",{products:products});
+    res.render("details_product",{products:products});
 
 })
 app.get("/edit/:proid", async (req,res)=>{

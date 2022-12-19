@@ -8,15 +8,17 @@
     <title>Title</title>
 </head>
 <body>
-
-<% for(let i = 0; i < product.length; i++){ %>
+<% for(let i = 0; i < data.length; i++){ %>
     <div class="products">
-        <img src=<%- product[i].image %>>
-        <div class="info">
-            <p><%- product[i].description %><br><br><b><%- product[i].price %>€</b>
-            </p>
-            <a href="panier.ejs"><input type="submit" name="laptop1" class="button1" value="Ajouter au panier"></a><br>
-            <a href="paiment.html"><input type="submit" name="laptop1" class="button2" value="Procéder au paiment"></a>
+        <img src=<%- "Image/" + data[i].image %>>
+        <div class="card__content">
+            <p><%- data[i].name%></p>
+            <p><%- data[i].description %><br><br><b><%- data[i].price %>€</b></p>
+            <div class="info">
+                <input type="submit" name="laptop1" class="button2" value="Acheter">
+
+                <a href="details_product/<%=data[i].id%>"  ><input type="submit" name="laptop1" class="button2" value="Details"></a>
+            </div>
         </div>
     </div>
 <% } %>

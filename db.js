@@ -10,8 +10,6 @@ class  User extends Model{}
 class Products extends Model{}
 class Historic_achat extends Model{}
 
-
-
 User.init({
     id:{
         type:DataTypes.INTEGER,
@@ -80,7 +78,6 @@ Historic_achat.init({
     }
 
 },{sequelize,modelName:"Historic_achat"})
-
 
 async function nbrPost(id){
     // return le nombre le plus élevé d'image +1, table: Products  , colonne: idUser
@@ -224,7 +221,6 @@ module.exports= {
     },
     getdisplay_order: async function getdisplay_order(id = undefined) {
         return await Products.findAll().then(function (result) {
-            //console.log(result);
             return result
         })
 
