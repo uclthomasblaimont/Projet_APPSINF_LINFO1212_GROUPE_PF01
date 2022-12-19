@@ -153,7 +153,7 @@ app.get("/add_product",async (req,res)=>{
 app.get("/details_product/:proid",async (req,res)=>{
     let products;
     products=await db.viewsdetailsproduct(req.params.proid);
-    res.render("details_product",{products:products});
+    res.render("details_product",{products:products,username:req.session.username});
 
 })
 app.get("/edit/:proid", async (req,res)=>{
@@ -263,6 +263,19 @@ app.post("/delete",async (req,res)=>{
 app.post("/Historique_achat",async (req,res)=>{
     res.redirect("/Historique_achat")
 })
+
+app.post("/acheter",async(req,res)=>{
+    console.log(req.body.id)
+    console.log(req.session.username)
+    console.log(req.body.price)
+    console.log(req.body.name)
+    let money;
+    money = await getMoney(req.session.ID)// avec l 'id du user
+
+
+
+})
+
 //////////////////   Start server   //////////////////////////////////////////////////////////////
 https.createServer({
     key: fs.readFileSync('./key.pem'),
