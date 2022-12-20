@@ -70,7 +70,9 @@ Historic_achat.init({
     id:{
         type:DataTypes.INTEGER,
         autoIncrement:true,
-        primaryKey:true
+    },
+    user:{
+
     },
     produit:{
         type:DataTypes.TEXT,
@@ -280,6 +282,10 @@ module.exports= {
     },
     checkpoint: async function checkpoint(product,price_product,point,userid){
 
+        // si pas déjà dans l'historique du user ? true : false
+        // si true alors on continue sinon on revoit un message d'erreur
+
+
         if(point === 0){
             console.log("portefeuille vide")
             return false
@@ -288,6 +294,8 @@ module.exports= {
             point-=price_product;
             //User.update({money:point},{where:{id:userid}})// on reprend l'id du user
             //updateMoney2()
+            // axel doit mettre l'id du user dans la fonctiion money 2
+
             Historic_achat.create({
                     produit: product
                 }).then(pro=>{
@@ -303,6 +311,10 @@ module.exports= {
             return false
         }
 
+    },
+
+    checkhistoric:async function chechistoric(product,user){
+        return null
     }
 }
 
