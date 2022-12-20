@@ -72,6 +72,9 @@ Historic_achat.init({
         autoIncrement:true,
     },
     user:{
+        type:DataTypes.TEXT,
+        primaryKey:true,
+
 
     },
     produit:{
@@ -80,6 +83,7 @@ Historic_achat.init({
     }
 
 },{sequelize,modelName:"Historic_achat"})
+sequelize.sync()
 
 async function nbrPost(id){
     // return le nombre le plus élevé d'image +1, table: Products  , colonne: idUser
@@ -325,9 +329,23 @@ module.exports= {
 
     },
 
-    checkhistoric:async function chechistoric(product,user){
+    checkhistoric:async function checkistoric(product,user){
         return null
+    },
+
+    getHistoric : async function getHistoric(username){
+       return  Historic_achat.findByPk(username).then(user=>{
+           if(user){
+               return user
+           }else{
+               return false
+           }
+       }).catch(err=>{
+           console.log("historique non trouvée")
+           return false
+       })
+        }
     }
-}
+
 
 
