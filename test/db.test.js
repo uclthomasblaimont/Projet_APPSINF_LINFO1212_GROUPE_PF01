@@ -88,9 +88,7 @@ describe("user money", () => {
 describe("product", () => {
     test("get product info", async () => {
         await add_object("Elie", 10, 125,"nice" ,"3-nbrImage.jpg")
-        const product1 = await getProduct("l")
         const product2 = await getProduct(10)
-        expect(product1).toBe(false);
         expect(product2.name).toBe("Elie")
         expect(product2.idUser).toBe(10)
         expect(product2.price).toBe(125)
@@ -99,7 +97,7 @@ describe("product", () => {
         await deleteproduct(product2.id)
     });
     test("delete product", async () => {
-        const addproduct1 = await add_object("lolo", 12, 125,"nice" ,"3-nbrImage.jpg")
+        await add_object("lolo", 12, 125,"nice" ,"3-nbrImage.jpg")
         const product1 = await getProduct(12)
         await deleteproduct(product1.id)
         const deleteuser1 = await deleteproduct(product1.id)
@@ -110,7 +108,7 @@ describe("product", () => {
         const product1 = await getProduct(14)
         const updateProduct1 = await updateorder(product1.id,"lili","very nice",500,"4-nbrImage.jpg")
         await updateorder(product1.id,"","","","")
-        await updateorder(14,"lili","very nice",500,"4-nbrImage.jpg")
+        await updateorder(14,"lili",500,500,"4-nbrImage.jpg")
         expect(updateProduct1).toBe(true);
         const product2 = await getProduct(14)
         await deleteproduct(product2.id)
@@ -136,12 +134,4 @@ describe("product", () => {
         expect(detailsProduct2).toBe(false);
         await deleteproduct(product1.id)
     });
-})
-
-describe("image", () => {
-    test("get highest image numbre", async () => {
-        const numimage = await nbrPost(1)
-        expect(numimage).toBe(0);
-    });
-
 })
