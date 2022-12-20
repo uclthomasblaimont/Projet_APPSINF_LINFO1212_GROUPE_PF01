@@ -279,13 +279,15 @@ module.exports= {
         // supprime le produit
     },
     checkpoint: async function checkpoint(product,price_product,point,userid){
+
         if(point === 0){
             console.log("portefeuille vide")
             return false
         }
         if(point>=price_product){
             point-=price_product;
-            User.update({money:point},{where:{id:userid}})// on reprend l'id du user
+            //User.update({money:point},{where:{id:userid}})// on reprend l'id du user
+            //updateMoney2()
             Historic_achat.create({
                     produit: product
                 }).then(pro=>{

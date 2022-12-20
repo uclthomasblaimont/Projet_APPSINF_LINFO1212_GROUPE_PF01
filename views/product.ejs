@@ -21,6 +21,17 @@
 
                 <input type="submit" name="laptop1" class="button2" value="Acheter">
             </form>
+            <% if(username===undefined){
+                console.log("vous n'êtes pas connectée")
+            }%>
+            <% if (data[i].idUser===username){%><form action="/edit/<%- data[i].id%>" method="post">
+                <input type="submit" name="delete" class="button2" value="Edit">
+            </form>
+            <!--<form action="/delete" method="post">
+            supprimer le produit si c est le créateur voir projet travaux
+
+            </form>-->
+            <%}%>
 
             <a href="details_product/<%=data[i].id%>"  ><input type="submit" name="laptop1" class="button2" value="Details"></a>
         </div>

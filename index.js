@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 let db = require("./db")
-const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey} = require("./db");
+const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey, checkpoint} = require("./db");
 const {updateMoney, updateMoney2,updateProfils} = require("./db");
 
 ///////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ app.get('/',async (req,res)=>{
 app.get("/product",async (req,res)=>{
     let products;
     products= await  db.getdisplay_order();
-    res.render("index",{product:products});
+    res.render("index",{product:products,username:req.session.username});
 })
 app.get("/login", (req, res) => {
     res.render("login",{username:req.session.username,error2:req.session.error2});
@@ -266,11 +266,21 @@ app.post("/Historique_achat",async (req,res)=>{
 
 app.post("/acheter",async(req,res)=>{
     console.log(req.body.id)
+    console.log("----------------------")
     console.log(req.session.username)
+    console.log("----------------------")
     console.log(req.body.price)
+    console.log("----------------------")
     console.log(req.body.name)
+    console.log("----------------------")
+    console.log(req.session.ID)
+    console.log("----------------------")
     let money;
-    money = await getMoney(req.session.ID)// avec l 'id du user
+    money =  getMoney(req.session.ID)// avec l 'id du user
+    console.log("----------")
+    console.log(money)
+    await checkpoint(req.body.name,req.body.price,money,req.session.ID)
+    res.redirect("/")
 
 
 
