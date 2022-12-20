@@ -275,6 +275,7 @@ module.exports= {
             id.destroy()
         ).catch(err=>{
             console.log("error: "+ err)
+            return false
         })
         // supprime le produit
     },
