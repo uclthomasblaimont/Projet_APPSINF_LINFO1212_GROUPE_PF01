@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 let db = require("./db")
-const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey, checkpoint} = require("./db");
+const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey, checkpoint, getHistoric} = require("./db");
 const {updateMoney, updateMoney2,updateProfils} = require("./db");
 
 ///////////////////////////////////////////////////////////
@@ -164,7 +164,9 @@ app.get("/edit/:proid", async (req,res)=>{
 
 })
 app.get("/Historique_achat", async(req,res)=>{
-    res.render("Historique_achat",{username:req.session.username})
+    let products
+    products= await getHistoric(req.session.username)
+    res.render("Historique_achat",{username:req.session.username,products:products})
 })
 
 ///////////////////  POST   ////////////////////////////////////////////////////////

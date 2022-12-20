@@ -10,6 +10,16 @@
 <body>
 <%-include("banner.ejs", {}) %>
 <br>
+<% for ( let i =0 ; i<products.length ; i++){ %>
+    <div class="Products">
+        <div class="info">
+            Voici vote historique
+            <p><%products[i].produit%></p>
+        </div>
+
+    </div>
+
+<%}%>
 
 </body>
 </html>

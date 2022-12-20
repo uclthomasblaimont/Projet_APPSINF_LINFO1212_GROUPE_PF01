@@ -83,7 +83,7 @@ Historic_achat.init({
     }
 
 },{sequelize,modelName:"Historic_achat"})
-sequelize.sync()
+
 
 async function nbrPost(id){
     // return le nombre le plus élevé d'image +1, table: Products  , colonne: idUser
@@ -310,7 +310,7 @@ module.exports= {
             point-=price_product;
             //User.update({money:point},{where:{id:userid}})// on reprend l'id du user
             //updateMoney2()
-            // axel doit mettre l'id du user dans la fonctiion money 2
+            // axel doit mettre l'id du user dans la fonction money 2
 
             Historic_achat.create({
                     produit: product
