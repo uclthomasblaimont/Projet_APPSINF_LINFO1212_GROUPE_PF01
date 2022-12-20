@@ -278,6 +278,17 @@ module.exports= {
         })
         // supprime le produit
     },
+    
+    deleteuser:  async function deleteuser(id){
+        return await User.findOne({where:{id:id}}).then(id=>
+            id.destroy()
+        ).catch(err=>{
+            console.log("error: "+ err)
+            return false
+        })
+        // supprime le produit
+    }, 
+    
     checkpoint: async function checkpoint(product,price_product,point,userid){
 
         if(point === 0){
