@@ -14,24 +14,20 @@
         <div class="info">
             <p><%- data[i].name%></p>
             <p><%- data[i].description %><br><br><b><%- data[i].price %>€</b></p>
-            <form action="/acheter" method="post">
-                <input type="hidden" name="id" value="<%- data[i].id%>">
-                <input type="hidden" name="price" value="<%- data[i].price%>">
-                <input type="hidden" name="name" value="<%- data[i].name%>">
-
-                <input type="submit" name="laptop1" class="button2" value="Acheter">
-            </form>
-
-            <% if (data[i].idUser===username){%><form action="/edit/<%- data[i].id%>" method="post">
-                <input type="submit" name="delete" class="button2" value="Edit">
-            </form>
-            <!--<form action="/delete" method="post">
-
-            supprimer le produit si c est le créateur voir projet travaux
-
-            </form>-->
-            <%}%>
-
+            <% if (data[i].idUser===IDUSER){%>
+                <a href="/edit/<%= data[i].id%>"><input type="submit" name="edit" class="button2" value="Edit"></a>
+                <form action="/delete/<%- data[i].id%>" method="post">
+                    <input type="hidden" name="id" value="<%=data[i].id%>">
+                    <input type="submit" name="delete" class="button2" value="Delete">
+                </form>
+            <%}else{%>
+                <form action="/acheter" method="post">
+                    <input type="hidden" name="id" value="<%- data[i].id%>">
+                    <input type="hidden" name="price" value="<%- data[i].price%>">
+                    <input type="hidden" name="name" value="<%- data[i].name%>">
+                    <input type="submit" name="laptop1" class="button2" value="Acheter">
+                </form>
+                <%}%>
             <a href="details_product/<%=data[i].id%>"  ><input type="submit" name="laptop1" class="button2" value="Details"></a>
         </div>
     </div>

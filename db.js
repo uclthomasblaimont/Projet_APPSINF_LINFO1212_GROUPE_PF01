@@ -70,12 +70,11 @@ Historic_achat.init({
     id:{
         type:DataTypes.INTEGER,
         autoIncrement:true,
+        primaryKey:true,
     },
     user:{
         type:DataTypes.TEXT,
         primaryKey:true,
-
-
     },
     produit:{
         type:DataTypes.TEXT,
@@ -83,6 +82,8 @@ Historic_achat.init({
     }
 
 },{sequelize,modelName:"Historic_achat"})
+
+
 
 
 async function nbrPost(id){
@@ -296,10 +297,13 @@ module.exports= {
         // supprime le produit
     }, 
     
-    checkpoint: async function checkpoint(product,price_product,point,userid){
+    checkpoint: async function checkpoint(product,price_product,point,user){
 
         // si pas déjà dans l'historique du user ? true : false
         // si true alors on continue sinon on revoit un message d'erreur
+        console.log(user)
+        console.log("------")
+
 
 
         if(point === 0){
@@ -313,7 +317,11 @@ module.exports= {
             // axel doit mettre l'id du user dans la fonction money 2
 
             Historic_achat.create({
-                    produit: product
+
+                produit: product,
+                user:user
+
+
                 }).then(pro=>{
                     console.log("Product added : "+pro)
                 return true

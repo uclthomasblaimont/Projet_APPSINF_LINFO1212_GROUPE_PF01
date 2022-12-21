@@ -58,17 +58,25 @@ app.use(session({
 app.get('/',async (req,res)=>{
     let products;
     products = await db.getdisplay_order()
-    res.render("menu",{username:req.session.username,data:products},);
+
+    let iduser;
+    iduser= req.session.ID
+    console.log(iduser)
+    console.log("**************aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa***")
+    res.render("menu",{username:req.session.username,data:products,IDUSER:iduser},);
     // Thomas: I have to direct to the main page
 })
 app.get("/product",async (req,res)=>{
     let products;
     products= await  db.getdisplay_order();
-    res.render("index",{product:products,username:req.session.username});
+
+    res.render("product",{product:products,username:req.session.username,IDUSER:iduser});
 })
 app.get("/login", (req, res) => {
     res.render("login",{username:req.session.username,error2:req.session.error2});
 });
+
+
 app.get("/register", (req, res) => {
     res.render("register",{username:req.session.username,error1:req.session.error1});
 });
@@ -82,68 +90,7 @@ app.get("/portefeuille", async (req, res) => {
 app.get("/Commandes",(req, res)=>{
     res.render("Commandes",{username:req.session.username});
 })
-app.get("/Ordinateurs_et_accesoires",async (req, res)=>{
-    await res.render("Ordinateurs_et_accesoires", {
-        username:req.session.username,
-        products1: [
-            {
-                price: 1299,
-                description: "SAMSUNG 13.3” Galaxy Book2 Pro Laptop Computer|\n" +
-                    "        Windows 11 PRO | 16GB | 256GB, 12th Gen Intel® Core™ i5-1240P Processor, Evo Certified, Lightweight, 2022 Model, Silver (NP934XED-KB1US)",
-                image: "Ordinateurs_et_accessoires/laptop1.png"
-            }
 
-        ],
-        products2: [
-            {
-                price: 499,
-                description: "Gaming PC Desktop Computer by Alarco Intel i5 3.10GHz,8GB Ram,1TB Hard Drive,Windows 10 pro,WiFi Ready,Video n" +
-                "Card Nvidia GTX 650 1GB, 3 RGB Fans with Remote",
-                image: "Ordinateurs_et_accessoires/pc-fix1.png"
-            }
-        ],
-        products3: [
-            {
-                price: 149,
-                description: "SAMSUNG 27-Inch CF39 Series FHD 1080p Curved Computer Monitor, Ultra Slim Design, AMD FreeSync, 4ms response, \n" +
-                "HDMI, DisplayPort, VESA Compatible, Wide Viewing Angle (LC27F398FWNXZA), Black",
-                image: "Ordinateurs_et_accessoires/ecran-pc-fixe1.png"
-            }
-        ],
-        products4: [
-            {
-                price: 70,
-                description: "RAZEAK Ultra Custom Wireless Gaming Mouse Syww 8, Gaming Mouse 3395 Sensor 26000 DPI Triple-Mode (Wired+2.4 G+ BT5.0) \n"+
-                "Connection- with Software Programmable (White)",
-                image: "Ordinateurs_et_accessoires/sourie1.png"
-            }
-        ],
-        products5: [
-            {
-                price: 26,
-                description: "RaceGT Gaming Keyboard,114 Keys Full Size Wired LED Backlit with Dedicated Multimedia Keys Wrist Rest \n"+
-                "Mechanical Feeling Keybaord Compatible for Computer PC Laptop Xbox",
-                image: "Ordinateurs_et_accessoires/clavier1.png"
-            }
-        ],
-        products6: [
-            {
-                price: 83,
-                description: "YSSOA Backrest and Seat Height Adjustable Swivel Recliner Racing Office Computer Ergonomic \n"+
-               "Video Game Chair, Without footrest, Black/White",
-                image: "Ordinateurs_et_accessoires/chaise1.png"
-            }
-        ],
-        products7: [
-            {
-                price: 24,
-                description: "BENGOO G9000 Stereo Gaming Headset for PS4 PC Xbox One PS5 Controller, Noise Cancelling Over Ear Headphones with \n"+
-                "Mic, LED Light, Bass Surround, Soft Memory Earmuffs for Laptop Mac Nintendo NES Games",
-                image: "Ordinateurs_et_accessoires/casque1.png"
-            }
-        ]
-    });
-})
 app.get("/settingProfils",async (req, res)=>{
     await res.render("settingProfils", {username:req.session.username, error3:req.session.error3});
 })
@@ -159,7 +106,7 @@ app.get("/details_product/:proid",async (req,res)=>{
 app.get("/edit/:proid", async (req,res)=>{
     let products;
     products = await db.viewsdetailsproduct(req.params.proid)
-    res.render("edit",{products:products});
+    res.render("edit",{username:req.session.username,products:products});
     // il affiche les données qu'il y a déjà dans la carte du produit .
 
 })
@@ -249,12 +196,13 @@ app.post("/add_product",upload.single("image"), async (req,res)=>{
 app.post("/edit", async (req,res)=>{
     const name_product= req.body.title;
     //const image_product = req.body.image;
+    console.log(req.file.filename)
     const price_product=req.body.price;
     const description_product = req.body.description;
     const id=req.body.id;
     //console.log(name_product,req.file.filename,price_product,description_product,id);
     await updateorder(id, name_product, description_product, price_product, req.file.filename);
-    res.redirect("/");
+    res.redirect("/menu");
 })
 app.post("/delete",async (req,res)=>{
     console.log(req.body.id)
@@ -262,9 +210,13 @@ app.post("/delete",async (req,res)=>{
     res.redirect("/")
     // pas sûr de cette methode à revoir
 })
+
+
+
 app.post("/Historique_achat",async (req,res)=>{
     res.redirect("/Historique_achat")
 })
+
 
 app.post("/acheter",async(req,res)=>{
     console.log(req.body.id)
@@ -275,15 +227,14 @@ app.post("/acheter",async(req,res)=>{
     console.log("----------------------")
     console.log(req.body.name)
     console.log("----------------------")
-    console.log(req.session.ID)
+    console.log(req.session.ID)// id user
     console.log("----------------------")
     let money;
     money =  getMoney(req.session.ID)// avec l 'id du user
     console.log("----------")
     console.log(money)
-    await checkpoint(req.body.name,req.body.price,money,req.session.ID)
+    await checkpoint(req.body.name,req.body.price,money,req.session.username)
     res.redirect("/")
-
 
 
 })
