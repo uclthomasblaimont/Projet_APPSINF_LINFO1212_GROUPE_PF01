@@ -57,15 +57,16 @@ app.use(session({
 ///////////////////  GET   ////////////////////////////////////////////////////////
 app.get('/',async (req,res)=>{
     let products;
-    products = await db.getdisplay_order()
-
+    if (req.session.listOfProducts === undefined){
+        products = await db.getProduct()
+    }else {
+        products = req.session.listOfProducts
+    }
     let iduser;
-    iduser= req.session.ID
-    console.log(iduser)
-    console.log("**************aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa***")
+    iduser=req.session.ID;
     res.render("menu",{username:req.session.username,data:products,IDUSER:iduser},);
     // Thomas: I have to direct to the main page
-})
+});
 app.get("/product",async (req,res)=>{
     let products;
     products= await  db.getdisplay_order();
@@ -84,7 +85,7 @@ app.get("/Panier", (req, res) => {
     res.render("Panier",{username:req.session.username});
 });
 app.get("/portefeuille", async (req, res) => {
-    req.session.money = await getMoney(req.session.username)
+    req.session.money = await getMoney(req.session.ID)
     res.render("Portefeuille",{username:req.session.username, money:req.session.money});
 });
 app.get("/Commandes",(req, res)=>{
@@ -105,7 +106,10 @@ app.get("/details_product/:proid",async (req,res)=>{
 })
 app.get("/edit/:proid", async (req,res)=>{
     let products;
-    products = await db.viewsdetailsproduct(req.params.proid)
+    console.log(req.body.id)
+    console.log("##################################")
+    products = await db.viewsdetailsproduct(1)
+    console.log(products)
     res.render("edit",{username:req.session.username,products:products});
     // il affiche les données qu'il y a déjà dans la carte du produit .
 
@@ -120,6 +124,19 @@ app.get("/Historique_achat", async(req,res)=>{
 app.post("/",async (req,res)=>{
     const users = await db.getUser(req.session.username);
 })
+
+app.post("/banner", async function(req, res){
+    console.log("req.body.recherche")
+    console.log(req.body.recherche)
+    console.log(req.body.categorieMenu)
+    req.session.listOfProducts = await db.getProduct(req.body.recherche,req.body.categorieMenu)
+    res.redirect("/")
+});
+
+
+
+
+
 app.post("/register",async (req,res)=> {
     req.session.error1 = "";
     if (await db.getUser(req.body.username)) { // si le pseudo est déjà dans la bdd -> n'enregistre pas l'utilisateur
@@ -166,10 +183,10 @@ app.post("/login",async (req,res)=>{ // async pour dire que fonction est asynchr
     });
 });
 app.post("/portefeuille",async (req,res)=>{
-    if (req.body.argent !== undefined) await updateMoney(req.session.username, parseInt(req.body.argent));
-    if (req.body.argent2 !== undefined) await updateMoney2(req.session.username, parseInt(req.body.argent2));
+    if (req.body.argent !== undefined && req.body.argent !=="") await updateMoney(req.session.ID, parseInt(req.body.argent)); // retire
+    if (req.body.argent2 !== undefined && req.body.argent2 !=="") await updateMoney(req.session.ID, parseInt(req.body.argent2) * -1);
     res.redirect("/portefeuille")
-})
+});
 app.post("/Commandes",async (req,res)=>{
     res.redirect("/product");
 
@@ -190,19 +207,19 @@ app.post("/settingProfils",async (req, res)=>{
     }
 })
 app.post("/add_product",upload.single("image"), async (req,res)=>{
-    db.add_object(req.body.title, req.session.ID, req.body.price,req.body.description, req.file.filename);
+    db.add_object(req.body.title,req.body.categorie, req.session.ID, req.body.price,req.body.description);
     res.redirect("/");
 })
 app.post("/edit", async (req,res)=>{
+    console.log(req.body.title)
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     const name_product= req.body.title;
-    //const image_product = req.body.image;
-    console.log(req.file.filename)
     const price_product=req.body.price;
     const description_product = req.body.description;
-    const id=req.body.id;
-    //console.log(name_product,req.file.filename,price_product,description_product,id);
-    await updateorder(id, name_product, description_product, price_product, req.file.filename);
-    res.redirect("/menu");
+    const id = req.body.id;
+    console.log(name_product,price_product,description_product,id);
+    await updateorder(id, name_product, description_product, price_product);
+    res.redirect("/");
 })
 app.post("/delete",async (req,res)=>{
     console.log(req.body.id)
@@ -210,7 +227,6 @@ app.post("/delete",async (req,res)=>{
     res.redirect("/")
     // pas sûr de cette methode à revoir
 })
-
 
 
 app.post("/Historique_achat",async (req,res)=>{

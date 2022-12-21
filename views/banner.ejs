@@ -5,70 +5,102 @@
     <title>banner</title>
 </head>
 <body>
-    <div class = container-menu id="top">
-        <div class="nav-wrapper">
-            <div class="left-side">
-                <div class="menu-button">
-                    <button onclick="myFunction()" class="dropbtn"><i class="fa fa-bars"></i></button>
+<div class = container-menu id="top">
+    <div class="nav-wrapper">
+        <div class="left-side">
+            <div class="menu-button">
+                <button onclick="myFunction()" class="dropbtn"><i class="fa fa-bars"></i></button>
+                <form action="/banner" method="post">
                     <div id="myDropdown" class="dropdown-content">
-                        <a href="/Ordinateurs_et_accesoires">Ordinateurs et accesoires</a>
-                        <a href="/Jeux_video">Jeux video</a>
-                        <a href="/Jeux_educatifs">Jeux éducatifs</a>
-                        <a href="/Vetement">Vetement</a>
-                        <a href="/Livres">Livres</a>
-                        <a href="/Gadget_electronique">Gadget électronique</a>
+                        <select name="categorieMenu">
+                            <option value="">Tout</option>
+                            <option value="Ordinateur">Ordinateur</option>
+                            <option value="Accessoire_électronique">Accessoire electronique</option>
+                            <option value="jeu_vidéo">jeu vidéo</option>
+                            <option value="livre">livre</option>
+                            <option value="vêtement">vêtement</option>
+                            <option value="Autres">Autres</option>
+                        </select>
                     </div>
-                </div>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search.." style="width:400px;height:40px;">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </div>
-                <div class="nav-link-wrapper">
-                    <a href="/">Menu</a>
-                </div>
-                <div class="nav-link-wrapper">
-                    <% if (username !== undefined) {%>
-                        <a href="/Portefeuille">Portefeuille</a>
-                    <% } else { %>
-                            <a href="/login">Portefeuille</a>
-                    <% } %>
+                    <div class="search-bar">
+                        <input type="text" name ="recherche" placeholder="rechercher un produit" style="width:400px;height:40px;">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </div>
 
-                </div>
-                <div class="nav-link-wrapper">
-                    <a href="/login">Se connecter</a>
-                </div>
-                <div class="nav-link-wrapper">
-                    <a href="/Historique_achat">Historique</a>
-                </div>
-                <div class="nav-link-wrapper">
-                    <a href="/add_product">Ajouter un produit</a>
-                </div>
-                <div class="nav-link-wrapper">
-                    <% if (username !== undefined) {%>
-                        <div>
-
-                            <a href="/settingProfils"><%= username %></a>
-                        </div>
-                    <% } else { %>
-                        <div>Pas connecté</div>
-                    <% } %>
-                </div>
-
+                </form>
+            </div>
+            <div class="nav-link-wrapper">
+                <a href="/">Menu</a>
+            </div>
+            <div class="nav-link-wrapper">
+                <% if (username !== undefined) {%>
+                    <a href="/Portefeuille">Portefeuille</a>
+                <% } else { %>
+                    <a href="/login">Portefeuille</a>
+                <% } %>
 
             </div>
+            <div class="nav-link-wrapper">
+                <a href="/login">Se connecter</a>
+            </div>
+            <div class="nav-link-wrapper">
+                <% if (username !== undefined) {%>
+                    <a href="/Commandes">Historique</a>
+                <% } else { %>
+                    <a href="/login">Historique</a>
+                <% } %>
+            </div>
+            <div class="nav-link-wrapper">
+                <% if (username !== undefined) {%>
+                    <a href="/add_product">Ajouter un produit</a>
+                <% } else { %>
+                    <a href="/login">Ajouter un produit</a>
+                <% } %>
 
-            <div class="right-side">
-                <div class="shopping-cart">
-                    <a href="/Panier">
-                        <img src="shopping-cart.png" style="width:40px;height:30px;">
-                    </a>
+            </div>
+            <div class="nav-link-wrapper">
+                <% if (username !== undefined) {%>
                     <div>
-                        <b><p>0</p></b>
+                        <a href="/settingProfils"><%= username %></a>
                     </div>
-
+                <% } else { %>
+                    <div>Pas connecté</div>
+                <% } %>
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="shopping-cart">
+                <a href="/Panier">
+                    <img src="shopping-cart.png" style="width:40px;height:30px;">
+                </a>
+                <div>
+                    <b><p>0</p></b>
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 </body>
+<script>
+
+    /*https://www.w3schools.com/howto/howto_js_dropdown.asp*/
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("menu-button");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+</script>
 </html>

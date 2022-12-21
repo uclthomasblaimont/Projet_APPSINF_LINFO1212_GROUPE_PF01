@@ -18,6 +18,15 @@
         <br>
         <h2>Ajouter un produit</h2>
         <form action="/add_product" method="POST" enctype="multipart/form-data">
+            <label for="categories">Catégorie</label>
+            <select name="categorie">
+                <option value="Ordinateur">Ordinateur</option>
+                <option value="Accessoire_électronique">Accessoire electronique</option>
+                <option value="jeu_vidéo">jeu vidéo</option>
+                <option value="livre">livre</option>
+                <option value="vêtement">vêtement</option>
+                <option value="Autres">Autres</option>
+            </select>
             <div class="form-group">
                 <label for="title">Titre</label>
                 <input class="form-control" id="title" name="title" required>

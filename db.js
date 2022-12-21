@@ -46,17 +46,20 @@ Products.init({
     name:{
         type:DataTypes.STRING,
         allowNull:false
-
+    },
+    categorie:{
+        type:DataTypes.STRING,
+        allowNull:false
     },
     idUser:{
-        type:DataTypes.INTEGER
+        type:DataTypes.INTEGER,
+        allowNull:false
     },
     price:{
         type:DataTypes.FLOAT,
         allowNull:false,
         defaultValue:0.0
     },
-
     description:{
         type:DataTypes.TEXT,
         allowNull:false
@@ -70,7 +73,6 @@ Historic_achat.init({
     id:{
         type:DataTypes.INTEGER,
         autoIncrement:true,
-        primaryKey:true,
     },
     user:{
         type:DataTypes.TEXT,
@@ -86,33 +88,21 @@ Historic_achat.init({
 
 
 
-async function nbrPost(id){
-    // return le nombre le plus élevé d'image +1, table: Products  , colonne: idUser
-    return 0;
 
-}
-async function getMoney(username) {
-    return User.findOne({where: {username: username}, attributes: ["money"]}).then(mon => {
+
+async function getMoney(id) {
+    return User.findOne({where: {id: id}, attributes: ["money"]}).then(mon => {
         if (mon) {
             return mon.dataValues.money
         } else {
             return false
         }
     }).catch(err => {
-        console.log("Unable to rretrive money of " + username + ": " + err)
+        console.log("Unable to rretrive money of " + id + ": " + err)
         return false
     })
 }
-async function getProduct(id) {
-    return User.findOne({where: {id: id}})
-        .then(prod => {
-            if (prod) {
-                return prod;
-            } else {
-                return false;
-            }
-        });
-}
+
 async function getID(username) {
     return User.findOne({where: {username: username}, attributes: ["id"]}).then(mon => {
         if (mon) {
@@ -125,26 +115,16 @@ async function getID(username) {
         return false
     })
 }
-async function updateMoney(username, montant) {
-    money = await getMoney(username);
+async function updateMoney(id, montant) {
+    money = await getMoney(id);
     new_money = money + montant;
-    return User.update({money: new_money}, {where: {username: username}}).then(state => {
+    return User.update({money: new_money}, {where: {id: id}}).then(state => {
         return state === 1; // nbr changement
     }).catch(err => {
-        console.log("Couldn't update money of " + username + ": " + err)
+        console.log("Couldn't update money" + err)
         return false
     })
-}
-async function updateMoney2(username, montant) {
-    money = await getMoney(username);
-    new_money = money - montant;
-    return User.update({money: new_money}, {where: {username: username}}).then(state => {
-        return state === 1; // nbr changement
-    }).catch(err => {
-        console.log("Couldn't update money of " + username + ": " + err)
-        return false
-    })
-}
+}//ajoute ou retire argent
 async function updateProfils(username, newusername, newpassword, newadresse){
     return User.findOne({where:{username:username}}).then(modif => {
         if(modif) {
@@ -178,6 +158,19 @@ async function checkKey(iD,key) {
         });
 }
 module.exports= {
+
+
+
+    getProdut2: async function getProduct2(id) {
+        return Products.findOne({where: {idUser: id}})
+            .then(prod => {
+                if (prod) {
+                    return prod;
+                } else {
+                    return false;
+                }
+            });
+    },
     getUser: function getUser(username) {
         return User.findOne({where: {username: username}})
             .then(user => {
@@ -187,6 +180,20 @@ module.exports= {
                     return false;
                 }
             });
+    },
+    getProduct: async function getProduct(name = undefined,categorie = undefined){
+        if (categorie === undefined || categorie === "") {
+            if (name === undefined || name === ""){
+                return await Products.findAll().then(function(result){ return result })
+            }
+            else return await Products.findAll({where:{name: {[Op.like]:"%"+name+"%"}}})
+        }
+        else {
+            if (name === undefined || name === ""){
+                return await Products.findAll({where:{categorie:categorie}}).then(function(result){ return result })
+            }
+            else return await Products.findAll({where:{categorie:categorie,name: {[Op.like]:"%"+name+"%"}}})
+        }
     },
     addUser: function addUser(username, password, adresse, money) {
         return User.create({
@@ -205,14 +212,14 @@ module.exports= {
     },
     getMoney,
     updateMoney,
-    updateMoney2,
     updateProfils,
     getID,
     checkKey,
-    getProduct,
-    add_object: function add_object(name, idUser, price, description, image) {
+
+    add_object: function add_object(name,categorie,idUser, price, description, image) {
         Products.create({
             name: name,
+            categorie: categorie,
             idUser:idUser,
             price: price,
             description: description,
@@ -312,7 +319,7 @@ module.exports= {
         }
         if(point>=price_product){
             point-=price_product;
-            //User.update({money:point},{where:{id:userid}})// on reprend l'id du user
+            User.update({money:point},{where:{id:userid}})// on reprend l'id du user
             //updateMoney2()
             // axel doit mettre l'id du user dans la fonction money 2
 
