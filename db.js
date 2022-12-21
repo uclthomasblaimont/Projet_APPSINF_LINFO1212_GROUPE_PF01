@@ -85,7 +85,7 @@ Historic_achat.init({
 
 },{sequelize,modelName:"Historic_achat"})
 
-sequelize.sync()
+
 
 
 
