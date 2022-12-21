@@ -214,7 +214,7 @@ app.post("/settingProfils",async (req, res)=>{
     }
 })
 app.post("/add_product",upload.single("image"), async (req,res)=>{
-    db.add_object(req.body.title,req.body.categorie, req.session.ID, req.body.price,req.body.description);
+    db.add_object(req.body.title,req.body.categorie, req.session.ID, req.body.price,req.body.description, req.file.filename);
     res.redirect("/");
 })
 
