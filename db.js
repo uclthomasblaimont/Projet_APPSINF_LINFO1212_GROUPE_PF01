@@ -85,7 +85,7 @@ Historic_achat.init({
 
 },{sequelize,modelName:"Historic_achat"})
 
-
+sequelize.sync()
 
 
 
@@ -247,8 +247,11 @@ module.exports= {
             }else{
                 return false
             }
+
+
         })
     },
+
     updateorder : async function updateorder(id,new_name,new_description,new_price,new_image){
         return   Products.findOne({where:{id:id}}).then(found=>{
             if(found){

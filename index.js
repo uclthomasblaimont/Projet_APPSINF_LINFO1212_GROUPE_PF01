@@ -102,18 +102,17 @@ app.get("/details_product/:proid",async (req,res)=>{
     let products;
     products=await db.viewsdetailsproduct(req.params.proid);
     res.render("details_product",{products:products,username:req.session.username});
-
 })
+
+
 app.get("/edit/:proid", async (req,res)=>{
     let products;
-    console.log(req.body.id)
-    console.log("##################################")
-    products = await db.viewsdetailsproduct(1)
-    console.log(products)
-    res.render("edit",{username:req.session.username,products:products});
+    products = await db.viewsdetailsproduct(req.params.proid)
+    res.render("edit",{products:products,username:req.session.username});
     // il affiche les données qu'il y a déjà dans la carte du produit .
 
 })
+
 app.get("/Historique_achat", async(req,res)=>{
     let products
     products= await getHistoric(req.session.username)
@@ -133,7 +132,15 @@ app.post("/banner", async function(req, res){
     res.redirect("/")
 });
 
-
+app.post("/edit", async (req,res)=>{
+    const name_product= req.body.title;
+    const price_product=req.body.price;
+    const description_product = req.body.description;
+    const id=req.body.id;
+    console.log(name_product,price_product,description_product,id);
+    await updateorder(id, name_product, description_product, price_product);
+    res.redirect("/");
+})
 
 
 
@@ -210,17 +217,7 @@ app.post("/add_product",upload.single("image"), async (req,res)=>{
     db.add_object(req.body.title,req.body.categorie, req.session.ID, req.body.price,req.body.description);
     res.redirect("/");
 })
-app.post("/edit", async (req,res)=>{
-    console.log(req.body.title)
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-    const name_product= req.body.title;
-    const price_product=req.body.price;
-    const description_product = req.body.description;
-    const id = req.body.id;
-    console.log(name_product,price_product,description_product,id);
-    await updateorder(id, name_product, description_product, price_product);
-    res.redirect("/");
-})
+
 app.post("/delete",async (req,res)=>{
     console.log(req.body.id)
     await deleteproduct(req.body.id)

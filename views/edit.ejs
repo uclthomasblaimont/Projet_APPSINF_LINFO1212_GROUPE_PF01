@@ -21,15 +21,15 @@
             <input type="hidden" name="id" value="<%= products.id%>">
             <div class="form-group">
                 <label for="title">Titre</label>
-                <input class="form-control" id="title" name="title" value="<%= products.name%>" required>
+                <input class="form-control" id="title" name="title" value="<%= products.name%>">
             </div>
             <div class="form-group">
                 <label for="price">Prix</label>
-                <input class="form-control" type="number" id="price" name="price" value="<%= products.price%>" min="1" max="10000" required>
+                <input class="form-control" type="number" id="price" name="price" value="<%= products.price%>" min="1" max="10000">
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea class="form-control" name="description"id="description" value="<%= products.description%>"></textarea>
+                <textarea class="form-control" name="description" id="description"> <%= products.description%></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
