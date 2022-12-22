@@ -58,26 +58,15 @@
                 <% } %>
 
             </div>
-            <div class="nav-link-wrapper">
-                <% if (username !== undefined) {%>
-                    <div>
-                        <a href="/settingProfils"><%= username %></a>
-                    </div>
-                <% } else { %>
-                    <div>Pas connecté</div>
-                <% } %>
-            </div>
         </div>
         <div class="right-side">
-            <div class="shopping-cart">
-                <a href="/Panier">
-                    <img src="shopping-cart.png" style="width:40px;height:30px;">
-                </a>
-                <div>
-                    <b><p>0</p></b>
+            <% if (username !== undefined) {%>
+                <div class="connected">
+                    <a href="/settingProfils"><%= username %></a>
                 </div>
-
-            </div>
+            <% } else { %>
+                <div class="not_connected">Pas connecté</div>
+            <% } %>
         </div>
     </div>
 </div>
