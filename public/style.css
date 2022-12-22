@@ -71,8 +71,6 @@ body{
     border: none;
 }
 
-
-
 .nav-link-wrapper a{
     color: black;
     text-decoration: none;
@@ -92,9 +90,11 @@ body{
     margin-top: 0px;
 }
 
+.search-bar{
+    float: right;
+}
 
 .search-bar button{
-    float: right;
     padding: 13px 20px;
     margin-right: 16px;
     background: #ddd;
@@ -108,96 +108,7 @@ body{
     color: grey;
 }
 
-.slideshow-container {
-    max-width: 100px;
-}
 
-.prev{
-    cursor: pointer;
-    position: absolute;
-    top: 20%;
-    width: auto;
-    padding: 16px;
-    margin-top: 10px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-}
-
-.next {
-    position: absolute;
-    top: 20%;
-    width: auto;
-    padding: 16px;
-    margin-top: 10px;
-    color: white;
-    left: 1380px;
-    margin-left: 100px;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    user-select: none;
-    right: 0;
-    border-radius: 3px 0 0 3px;
-}
-
-.prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.8);
-}
-
-
-.fade {
-    animation-name: fade;
-    animation-duration: 1.5s;
-}
-
-.item-wrapper{
-    margin-top: 400px;
-    margin-left: 50px;
-    position: absolute;
-    z-index: 9;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-.item-wrapper .widget{
-    background-color: white;
-    margin-left: 20px;
-    margin-bottom: 70px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-.item-wrapper .widget img{
-    margin-left: 30px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    transition: transform .2s;
-}
-
-.item-wrapper .widget img:hover{
-    transform: scale(1.1);
-}
-
-.item-wrapper .widget a{
-    text-decoration: none;
-    margin-top: 20px;
-    margin-left: 40px;
-    margin-bottom: 30px;
-    transition: transform .2s;
-}
-
-.item-wrapper .widget a:hover{
-    transform: scale(1.1);
-}
-
-.item-wrapper .widget .title{
-    font-size: 18px;
-    padding-left: 20px;
-}
 
 .menu-button button {
     background-color: grey;
@@ -205,6 +116,9 @@ body{
     padding: 16px;
     border: none;
     cursor: pointer;
+}
+.dropbtn{
+    float: left;
 }
 
 .dropbtn:hover {
@@ -222,6 +136,7 @@ body{
     position: absolute;
     background-color: darkgrey;
     min-width: 160px;
+    margin-top: 3%;
     z-index: 1;
 }
 
@@ -346,8 +261,8 @@ body{
     margin-left: 40%;
     margin-right: 40%;
     margin-top: 10%;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 3%;
+    padding-right: 3%;
     padding-bottom: 2%;
     border-color: black;
     border-style: solid;
@@ -368,12 +283,25 @@ body{
     box-sizing: border-box;
 }
 
+.content-login .login-container [type=password]{
+    width: 95%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
 .content-login .login-container a [type=submit]{
     width: 50%;
     background-color: cornflowerblue;
     color: white;
-    padding: 7px 15px;
-    margin: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 30px;
+    padding-right: 90px;
+    margin-top: 5%;
+    margin-left: 10%;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -390,7 +318,7 @@ body{
 
 .content-login .login-container a{
     text-decoration: none;
-    margin-left: 40px;
+    margin-left: 30px;
 }
 
 .content-login .register-from-login{
@@ -405,15 +333,15 @@ body{
 }
 
 
-.content-login .register-button input{
+.content-login .register-button [type=submit]{
     width: 20%;
     background-color: cornflowerblue;
     color: white;
-    padding: 7px 10px;
+    padding: 7px 17px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin: 20px 40% 90px;
+    margin: 20px 40% 40px;
 }
 
 .content-login .register-button input:hover{
