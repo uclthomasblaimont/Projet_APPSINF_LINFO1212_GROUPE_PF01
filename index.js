@@ -37,8 +37,8 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 let db = require("./db")
-const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey, checkpoint, getHistoric} = require("./db");
-const {updateMoney, updateMoney2,updateProfils} = require("./db");
+const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey, checkpoint, getHistoric,ToHistoric} = require("./db");
+const {updateMoney,updateProfils,getCategorie,getImage,getDescription} = require("./db");
 
 ///////////////////////////////////////////////////////////
 app.use(express.static('public'));
@@ -81,15 +81,16 @@ app.get("/login", (req, res) => {
 app.get("/register", (req, res) => {
     res.render("register",{username:req.session.username,error1:req.session.error1});
 });
-app.get("/Panier", (req, res) => {
-    res.render("Panier",{username:req.session.username});
-});
+
 app.get("/portefeuille", async (req, res) => {
     req.session.money = await getMoney(req.session.ID)
     res.render("Portefeuille",{username:req.session.username, money:req.session.money});
 });
-app.get("/Commandes",(req, res)=>{
-    res.render("Commandes",{username:req.session.username});
+app.get("/Commandes", async (req, res)=>{
+    let data;
+    data = await db.getHistoric(req.session.ID)// doit recuperer tt les objet acheté ou vendu
+    console.log(data)
+    res.render("Commandes",{username:req.session.username,data:data});
 })
 
 app.get("/settingProfils",async (req, res)=>{
@@ -98,11 +99,17 @@ app.get("/settingProfils",async (req, res)=>{
 app.get("/add_product",async (req,res)=>{
     res.render('add_product',{username:req.session.username});
 })
-app.get("/details_product/:proid",async (req,res)=>{
+app.get("/details_product/:id", async(req,res)=>{
+    console.log(req.params.id)
+    console.log("req.params.id")
     let products;
-    products=await db.viewsdetailsproduct(req.params.proid);
-    res.render("details_product",{products:products,username:req.session.username});
-})
+    if (req.session.listOfProducts === undefined){
+        products = await db.getProduct()
+    }else {
+        products = req.session.listOfProducts
+    }
+    res.render("details_product",{data:products,position:req.params.id,username:req.session.username})
+});
 
 
 app.get("/edit/:proid", async (req,res)=>{
@@ -113,11 +120,7 @@ app.get("/edit/:proid", async (req,res)=>{
 
 })
 
-app.get("/Historique_achat", async(req,res)=>{
-    let products
-    products= await getHistoric(req.session.username)
-    res.render("Historique_achat",{username:req.session.username,products:products})
-})
+
 
 ///////////////////  POST   ////////////////////////////////////////////////////////
 app.post("/",async (req,res)=>{
@@ -125,9 +128,7 @@ app.post("/",async (req,res)=>{
 })
 
 app.post("/banner", async function(req, res){
-    console.log("req.body.recherche")
-    console.log(req.body.recherche)
-    console.log(req.body.categorieMenu)
+
     req.session.listOfProducts = await db.getProduct(req.body.recherche,req.body.categorieMenu)
     res.redirect("/")
 });
@@ -161,7 +162,7 @@ app.post("/register",async (req,res)=> {
         console.log("nouvel utilisateur ajouté à la base de donnée")
         res.redirect("/");
     }
-})
+});
 app.post("/login",async (req,res)=>{ // async pour dire que fonction est asynchrone
     req.session.error2 = "";
     console.log(req.body.username);
@@ -231,25 +232,33 @@ app.post("/Historique_achat",async (req,res)=>{
 })
 
 
-app.post("/acheter",async(req,res)=>{
-    console.log(req.body.id)
-    console.log("----------------------")
-    console.log(req.session.username)
-    console.log("----------------------")
-    console.log(req.body.price)
-    console.log("----------------------")
-    console.log(req.body.name)
-    console.log("----------------------")
-    console.log(req.session.ID)// id user
-    console.log("----------------------")
-    let money;
-    money =  getMoney(req.session.ID)// avec l 'id du user
-    console.log("----------")
-    console.log(money)
-    await checkpoint(req.body.name,req.body.price,money,req.session.username)
-    res.redirect("/")
-
-
+app.post("/:id", async (req, res)=>{
+    if (req.session.username !== undefined){
+        if (req.session.money >= req.body.price) { // si assez d'argent
+            await updateMoney(req.session.ID, parseInt(req.body.price) * -1) // retire argent pour client
+            await updateMoney(req.body.idUser, parseInt(req.body.price)) // ajoute argent pour vendeur
+            const categorie = await getCategorie(req.body.id)
+            const description = await getDescription(req.body.id)
+            const image = await getImage(req.body.id)
+            //console.log(req.body.name)
+            console.log(categorie)
+            //console.log(req.body.idUser)
+            //console.log(req.session.ID)
+            //console.log(req.body.price)
+            console.log(description)
+            console.log(image)
+            await ToHistoric(req.body.name,categorie,req.body.idUser,req.session.ID,req.body.price,description,image)
+            await deleteproduct(req.body.id)
+            // ajoute a l'historique
+            console.log("achat effectué")
+            res.redirect("/portefeuille")
+        }
+        else {
+            console.log("pas assez de crédit")
+            res.redirect("/portefeuille")
+        }
+    }
+    else res.redirect("/login")
 })
 
 //////////////////   Start server   //////////////////////////////////////////////////////////////

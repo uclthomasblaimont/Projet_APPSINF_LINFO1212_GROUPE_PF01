@@ -103,6 +103,45 @@ async function getMoney(id) {
     })
 }
 
+async function getCategorie(id) {
+    return Products.findOne({where: {id: id}, attributes: ["categorie"]}).then(mon => {
+        if (mon) {
+            return mon.dataValues.categorie
+        } else {
+            return false
+        }
+    }).catch(err => {
+        console.log("Unable to rretrive money of " + id + ": " + err)
+        return false
+    })
+}
+
+
+async function getDescription(id) {
+    return Products.findOne({where: {id: id}, attributes: ["description"]}).then(mon => {
+        if (mon) {
+            return mon.dataValues.description
+        } else {
+            return false
+        }
+    }).catch(err => {
+        console.log("Unable to rretrive money of " + id + ": " + err)
+        return false
+    })
+}
+async function getImage(id) {
+    return Products.findOne({where: {id: id}, attributes: ["image"]}).then(mon => {
+        if (mon) {
+            return mon.dataValues.image
+        } else {
+            return false
+        }
+    }).catch(err => {
+        console.log(err)
+        return false
+    })
+}
+
 async function getID(username) {
     return User.findOne({where: {username: username}, attributes: ["id"]}).then(mon => {
         if (mon) {
@@ -158,6 +197,25 @@ async function checkKey(iD,key) {
         });
 }
 module.exports= {
+
+    ToHistoric: function ToHistoric(name, categorie, idVendeur, idAcheteur, price, description, image){
+        Historic_achat.create({
+            name: name,
+            categorie: categorie,
+            idVendeur:idVendeur,
+            idAcheteur:idAcheteur,
+            price: price,
+            description: description,
+            image: image
+        }).then(products => {
+            console.log("Products added " + products);
+            return true;
+        }).catch(err => {
+            console.log("Products already exists" + err);
+            return false;
+        })
+
+    },
 
 
 
@@ -215,6 +273,9 @@ module.exports= {
     updateProfils,
     getID,
     checkKey,
+    getCategorie,
+    getDescription,
+    getImage,
 
     add_object: function add_object(name,categorie,idUser, price, description, image) {
         Products.create({
