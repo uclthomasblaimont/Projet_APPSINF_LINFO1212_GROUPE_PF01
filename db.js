@@ -73,17 +73,39 @@ Historic_achat.init({
     id:{
         type:DataTypes.INTEGER,
         autoIncrement:true,
+        primaryKey:true
     },
-    user:{
+    name:{
+        type:DataTypes.STRING,
+        allowNull:false
+    },
+    categorie:{
+        type:DataTypes.STRING,
+        allowNull:false
+    },
+    idVendeur:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    },
+    idAcheteur:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    },
+    price:{
+        type:DataTypes.FLOAT,
+        allowNull:false,
+        defaultValue:0.0
+    },
+    description:{
         type:DataTypes.TEXT,
-        primaryKey:true,
+        allowNull:false
     },
-    produit:{
+    image:{
         type:DataTypes.TEXT,
         allowNull:false
     }
-
 },{sequelize,modelName:"Historic_achat"})
+sequelize.sync()
 
 
 
