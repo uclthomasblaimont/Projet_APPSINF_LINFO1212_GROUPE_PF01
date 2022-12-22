@@ -105,12 +105,6 @@ Historic_achat.init({
         allowNull:false
     }
 },{sequelize,modelName:"Historic_achat"})
-sequelize.sync()
-
-
-
-
-
 
 async function getMoney(id) {
     return User.findOne({where: {id: id}, attributes: ["money"]}).then(mon => {
@@ -434,19 +428,10 @@ module.exports= {
         return null
     },
 
-    getHistoric : async function getHistoric(username){
-       return  Historic_achat.findByPk(username).then(user=>{
-           if(user){
-               return user
-           }else{
-               return false
-           }
-       }).catch(err=>{
-           console.log("historique non trouvée")
-           return false
-       })
-        }
+    getHistoric: async function getHistoric(idAcheteur){
+        return await Historic_achat.findAll({where:{[Op.or]: [{idAcheteur:idAcheteur},{idVendeur:idAcheteur}]}})
     }
+}
 
 
 

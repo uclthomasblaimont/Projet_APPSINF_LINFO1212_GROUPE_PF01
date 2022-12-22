@@ -23,8 +23,10 @@
             <%}else{%>
                 <form action="/acheter" method="post">
                     <input type="hidden" name="id" value="<%- data[i].id%>">
+                    <input type="hidden" name="idUser" value="<%- data[i].idUser%>">
                     <input type="hidden" name="price" value="<%- data[i].price%>">
                     <input type="hidden" name="name" value="<%- data[i].name%>">
+
                     <input type="submit" name="laptop1" class="button2" value="Acheter">
                 </form>
                 <%}%>

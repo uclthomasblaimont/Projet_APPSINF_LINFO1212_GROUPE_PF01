@@ -13,7 +13,11 @@
 <p>Historique d'achats et de ventes</p>
 <div class="content-menu">
     <div class="content-ordi-accesoire">
-        <%if (data.length < 1) {%>
+        <%console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")%>
+        <%console.log(data)%>
+        <%console.log(data.length)%>
+        <%console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")%>
+        <%if (data.length === undefined) {%>
             <p>Votre historique est vide</p>
         <%}%>
         <% for(let i = 0; i < data.length; i++){ %>

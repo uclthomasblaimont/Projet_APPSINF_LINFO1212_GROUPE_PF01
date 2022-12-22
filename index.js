@@ -88,9 +88,9 @@ app.get("/portefeuille", async (req, res) => {
 });
 app.get("/Commandes", async (req, res)=>{
     let data;
-    data = await db.getHistoric(req.session.ID)// doit recuperer tt les objet acheté ou vendu
+    data = await getHistoric(req.session.ID)// doit recuperer tt les objet acheté ou vendu
     console.log(data)
-    res.render("Commandes",{username:req.session.username,data:data});
+    res.render("Commandes",{username:req.session.username,data:data,id:req.session.ID});
 })
 
 app.get("/settingProfils",async (req, res)=>{
@@ -240,11 +240,11 @@ app.post("/:id", async (req, res)=>{
             const categorie = await getCategorie(req.body.id)
             const description = await getDescription(req.body.id)
             const image = await getImage(req.body.id)
-            //console.log(req.body.name)
+            console.log(req.body.name)
             console.log(categorie)
-            //console.log(req.body.idUser)
-            //console.log(req.session.ID)
-            //console.log(req.body.price)
+            console.log(req.body.idUser)
+            console.log(req.session.ID)
+            console.log(req.body.price)
             console.log(description)
             console.log(image)
             await ToHistoric(req.body.name,categorie,req.body.idUser,req.session.ID,req.body.price,description,image)
