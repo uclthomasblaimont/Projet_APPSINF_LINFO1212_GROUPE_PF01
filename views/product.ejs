@@ -8,6 +8,9 @@
     <title>Title</title>
 </head>
 <body>
+<%if (data.length < 1) {%>
+    <p>Il n'y a pas encore de vente pour le moment ...</p>
+<%}%>
 <% for(let i = 0; i < data.length; i++){ %>
     <div class="products">
         <img src=<%- "Image/" + data[i].image %>>
