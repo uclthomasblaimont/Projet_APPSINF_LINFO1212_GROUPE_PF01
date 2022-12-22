@@ -17,7 +17,7 @@
 
         <br>
         <h2>Editer votre  produit</h2>
-        <form action="/edit" method="post" enctype="multipart/form-data">
+        <form method="post" action="/edit"  >
             <input type="hidden" name="id" value="<%= products.id%>">
             <div class="form-group">
                 <label for="title">Titre</label>
@@ -31,7 +31,10 @@
                 <label for="description">Description</label>
                 <textarea class="form-control" name="description" id="description"> <%= products.description%></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <a href="/">
+                <input type="submit" value="Ajouter">
+            </a>
+
         </form>
 
     </div>
