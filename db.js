@@ -235,7 +235,7 @@ module.exports= {
 
 
 
-    getProdut2: async function getProduct2(id) {
+    getProduct2: async function getProduct2(id) {
         return Products.findOne({where: {idUser: id}})
             .then(prod => {
                 if (prod) {
@@ -382,17 +382,22 @@ module.exports= {
             return false
         })
         // supprime le produit
-    }, 
-    
+    },
+
+    deleteHistoric:  async function deleteHistoric(id){
+        return await Historic_achat.findOne({where:{idAcheteur:id}}).then(id=>
+            id.destroy()
+        ).catch(err=>{
+            console.log("error: "+ err)
+            return false
+        })
+        // supprime le produit
+    },
+
     checkpoint: async function checkpoint(product,price_product,point,user){
 
         // si pas déjà dans l'historique du user ? true : false
         // si true alors on continue sinon on revoit un message d'erreur
-        console.log(user)
-        console.log("------")
-
-
-
         if(point === 0){
             console.log("portefeuille vide")
             return false
@@ -422,10 +427,6 @@ module.exports= {
             return false
         }
 
-    },
-
-    checkhistoric:async function checkistoric(product,user){
-        return null
     },
 
     getHistoric: async function getHistoric(idAcheteur){
