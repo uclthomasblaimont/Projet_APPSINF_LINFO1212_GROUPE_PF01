@@ -126,9 +126,6 @@ async function getCategorie(id) {
         } else {
             return false
         }
-    }).catch(err => {
-        console.log("Unable to rretrive money of " + id + ": " + err)
-        return false
     })
 }
 
@@ -140,9 +137,6 @@ async function getDescription(id) {
         } else {
             return false
         }
-    }).catch(err => {
-        console.log("Unable to rretrive money of " + id + ": " + err)
-        return false
     })
 }
 async function getImage(id) {
@@ -152,9 +146,6 @@ async function getImage(id) {
         } else {
             return false
         }
-    }).catch(err => {
-        console.log(err)
-        return false
     })
 }
 
@@ -226,9 +217,6 @@ module.exports= {
         }).then(products => {
             console.log("Products added " + products);
             return true;
-        }).catch(err => {
-            console.log("Products already exists" + err);
-            return false;
         })
 
     },
@@ -304,9 +292,6 @@ module.exports= {
         }).then(products => {
             console.log("Products added " + products);
             return true;
-        }).catch(err => {
-            console.log("Products already exists" + err);
-            return false;
         })
 
     },
@@ -341,24 +326,21 @@ module.exports= {
                     Products.update({description:new_description},{where:{id:id}}).then(description=>{
                         console.log("**")
                         console.log(description)
-                    }).catch(err=>console.log("error" + err))
-                    console.log("description_modified")
+                    })
                 }
                 if(new_price!==""){
                     console.log(new_price)
                     Products.update({price:new_price},{where:{id:id}}).then(price=>{
                         console.log("***")
                         console.log(price)
-                    }).catch(err=>console.log("error" + err))
-                    console.log("price_modified")
+                    })
                 }
                 if(new_image!==""){
                     console.log(new_image)
                     Products.update({image:new_image},{where:{id:id}}).then(image=>{
                         console.log("****")
                         console.log(image)
-                    }).catch(err=>console.log("error"+err))
-                    console.log("image_modified")
+                    })
                 }
                 return true
             }
