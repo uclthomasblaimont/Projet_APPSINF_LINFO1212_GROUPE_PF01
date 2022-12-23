@@ -37,6 +37,7 @@ body{
     top: 20%;
     margin-bottom: 10px;
     left: 90%;
+    color: white;
 }
 
 .container-menu .nav-wrapper .right-side a {
@@ -44,6 +45,7 @@ body{
     color: white;
 }
 .container-menu .nav-wrapper .right-side .not_connected {
+    color: white;
     font-size: 20px;
     position: absolute;
     top: 25%;
@@ -505,10 +507,5 @@ body{
     text-decoration: none;
     margin-left: 60px;
 }
-
-
-
-
-
 
 

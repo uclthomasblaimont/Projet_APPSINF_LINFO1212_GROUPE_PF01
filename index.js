@@ -10,7 +10,7 @@ const session =require("express-session");
 const fs = require("fs");
 const bodyParser =require("body-parser");
 const multer = require('multer'); // pour stocker les images
-
+let color = "style.css"
 ///////////////////////////stockage de l'image (clé unique) ////////////////////////////
 const storage = multer.diskStorage({
     destination: function (req, file, cb, newKey) {
@@ -55,6 +55,20 @@ app.use(session({
     }
 }));
 ///////////////////  GET   ////////////////////////////////////////////////////////
+app.get("/choiceNightDay", async (req,res)=>{
+    let products;
+    if (req.session.listOfProducts === undefined){
+        products = await db.getProduct()
+    }else {
+        products = req.session.listOfProducts
+    }
+    let iduser;
+    iduser=req.session.ID;
+
+    if (color === "nightmode.css") {color = "style.css"}
+    else color = "nightmode.css"
+    res.render("menu",{username:req.session.username,data:products,IDUSER:iduser,color:color});
+})
 app.get('/',async (req,res)=>{
     let products;
     if (req.session.listOfProducts === undefined){
@@ -64,62 +78,51 @@ app.get('/',async (req,res)=>{
     }
     let iduser;
     iduser=req.session.ID;
-    res.render("menu",{username:req.session.username,data:products,IDUSER:iduser},);
+    res.render("menu",{username:req.session.username,data:products,IDUSER:iduser,color:color});
     // Thomas: I have to direct to the main page
 });
 app.get("/product",async (req,res)=>{
     let products;
     products= await  db.getdisplay_order();
 
-    res.render("product",{product:products,username:req.session.username,IDUSER:iduser});
+    res.render("product",{product:products,username:req.session.username,IDUSER:iduser,color:color});
 })
 app.get("/login", (req, res) => {
-    res.render("login",{username:req.session.username,error2:req.session.error2});
+    res.render("login",{username:req.session.username,error2:req.session.error2,color:color});
 });
-
-
 app.get("/register", (req, res) => {
-    res.render("register",{username:req.session.username,error1:req.session.error1});
+    res.render("register",{username:req.session.username,error1:req.session.error1,color:color});
 });
-
 app.get("/portefeuille", async (req, res) => {
     req.session.money = await getMoney(req.session.ID)
-    res.render("Portefeuille",{username:req.session.username, money:req.session.money});
+    res.render("Portefeuille",{username:req.session.username, money:req.session.money,color:color});
 });
 app.get("/Commandes", async (req, res)=>{
     let data;
     data = await getHistoric(req.session.ID)// doit recuperer tt les objet acheté ou vendu
     console.log(data)
-    res.render("Commandes",{username:req.session.username,data:data,id:req.session.ID});
+    res.render("Commandes",{username:req.session.username,data:data,id:req.session.ID,color:color});
 })
-
 app.get("/settingProfils",async (req, res)=>{
     const people = await getUser(req.session.username)
-    await res.render("settingProfils", {username:req.session.username,people:people, error3:req.session.error3});
+    await res.render("settingProfils", {username:req.session.username,people:people, error3:req.session.error3,color:color});
 })
 app.get("/add_product",async (req,res)=>{
-    res.render('add_product',{username:req.session.username});
+    res.render('add_product',{username:req.session.username,color:color});
 })
-
 app.get("/edit/:proid", async (req,res)=>{
     let products;
     products = await db.viewsdetailsproduct(req.params.proid)
-    res.render("edit",{products:products,username:req.session.username});
-    // il affiche les données qu'il y a déjà dans la carte du produit .
-
+    res.render("edit",{products:products,username:req.session.username,color:color});
 })
-
 ///////////////////  POST   ////////////////////////////////////////////////////////
 app.post("/",async (req,res)=>{
     const users = await db.getUser(req.session.username);
 })
-
 app.post("/banner", async function(req, res){
-
     req.session.listOfProducts = await db.getProduct(req.body.recherche,req.body.categorieMenu)
-    res.redirect("/")
+    res.redirect("/",color)
 });
-
 app.post("/edit", async (req,res)=>{
     const name_product= req.body.title;
     const price_product=req.body.price;
@@ -129,7 +132,6 @@ app.post("/edit", async (req,res)=>{
     await updateorder(id, name_product, description_product, price_product);
     res.redirect("/");
 })
-
 app.post("/register",async (req,res)=> {
     req.session.error1 = "";
     if (await db.getUser(req.body.username)) { // si le pseudo est déjà dans la bdd -> n'enregistre pas l'utilisateur
@@ -203,15 +205,14 @@ app.post("/add_product",upload.single("image"), async (req,res)=>{
     db.add_object(req.body.title,req.body.categorie, req.session.ID, req.body.price,req.body.description, req.file.filename);
     res.redirect("/");
 })
-
-
-
-
 app.post("/Historique_achat",async (req,res)=>{
     res.redirect("/Historique_achat")
 })
-
-
+app.post("/delete", async (req,res)=>{
+    console.log(req.body.id)
+    await deleteproduct(req.body.id)
+    res.redirect("/")
+})
 app.post("/:id", async (req, res)=>{
     if (req.session.username !== undefined){
         if (req.session.money >= req.body.price) { // si assez d'argent
@@ -241,13 +242,6 @@ app.post("/:id", async (req, res)=>{
     else res.redirect("/login")
 })
 
-
-
-app.post("/delete", async (req,res)=>{
-    console.log(req.body.id)
-    await deleteproduct(req.body.id)
-    res.redirect("/")
-})
 //////////////////   Start server   //////////////////////////////////////////////////////////////
 https.createServer({
     key: fs.readFileSync('./key.pem'),
