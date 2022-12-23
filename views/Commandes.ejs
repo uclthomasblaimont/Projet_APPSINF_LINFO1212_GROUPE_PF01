@@ -25,7 +25,7 @@
                     <%}else {%>
                         <p>Vendu a qqun</p>
                     <%}%>
-                    <p><%- data[i].name%></p>
+                    <p class="info-title"><%- data[i].name%></p>
                     <p><%- data[i].description %><br><br><b><%- data[i].price %>€</b></p>
                     <form action="/<%= data[i].id %>" method="post">
                         <input type="hidden" name="id" value="<%- data[i].id%>">
