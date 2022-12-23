@@ -101,8 +101,6 @@ app.get("/add_product",async (req,res)=>{
     res.render('add_product',{username:req.session.username});
 })
 
-
-
 app.get("/edit/:proid", async (req,res)=>{
     let products;
     products = await db.viewsdetailsproduct(req.params.proid)

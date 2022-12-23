@@ -10,10 +10,9 @@
 <body>
 <%-include("banner.ejs", {}) %>
 <br>
-<p>Historique d'achats et de ventes</p>
 <div class="content-menu">
     <div class="content-ordi-accesoire">
-        <%if (data.length === undefined) {%>
+        <%if (data.length < 1) {%>
             <p>Votre historique est vide</p>
         <%}%>
         <% for(let i = 0; i < data.length; i++){ %>
@@ -21,11 +20,11 @@
                 <img src=<%- "Image/" + data[i].image %>>
                 <div class="info">
                     <% if (data[i].idAcheteur === id) {%>
-                        <p>acheté a qqun</p>
+                        <p>acheté</p>
                     <%}else {%>
-                        <p>Vendu a qqun</p>
+                        <p>Vendu</p>
                     <%}%>
-                    <p><%- data[i].name%></p>
+                        <p class="info-title"><%- data[i].name%><p>
                     <p><%- data[i].description %><br><br><b><%- data[i].price %>€</b></p>
                     <form action="/<%= data[i].id %>" method="post">
                         <input type="hidden" name="id" value="<%- data[i].id%>">
