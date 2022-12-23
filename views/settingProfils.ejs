@@ -22,15 +22,15 @@
         <%}%>
         <form method="post" action="/settingProfils">
             <b><p>Changer de pseudo :</p></b>
-            <input type="text" id="newusername" name="newusername" placeholder="Nouveau pseudo">
+            <input type="text" id="newusername" name="newusername" value="<%= people.username%>">
             <br>
 
             <b><p>changer de mot de passe :</p></b>
-            <input type="password" id="newpassword" name="newpassword" placeholder="Nouveau mot de passe">
+            <input type="password" id="newpassword" name="newpassword" placeholder="Mot de passe">
             <br>
 
             <b><p>Changer d'adresse :</p></b>
-            <input type="password" id="newadresse" name="newadresse" placeholder="Nouvelle adresse">
+            <input type="text" id="newadresse" name="newadresse" value="<%= people.adresse%>">
             <br>
             <br>
             <a href="/">
