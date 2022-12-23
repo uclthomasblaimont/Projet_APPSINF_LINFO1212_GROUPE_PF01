@@ -99,17 +99,7 @@ app.get("/settingProfils",async (req, res)=>{
 app.get("/add_product",async (req,res)=>{
     res.render('add_product',{username:req.session.username});
 })
-app.get("/details_product/:id", async(req,res)=>{
-    console.log(req.params.id)
-    console.log("req.params.id")
-    let products;
-    if (req.session.listOfProducts === undefined){
-        products = await db.getProduct()
-    }else {
-        products = req.session.listOfProducts
-    }
-    res.render("details_product",{products:products,position:req.params.id,username:req.session.username})
-});
+
 
 
 app.get("/edit/:proid", async (req,res)=>{

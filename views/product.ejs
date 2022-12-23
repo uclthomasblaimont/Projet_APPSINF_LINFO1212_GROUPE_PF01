@@ -15,7 +15,7 @@
     <div class="products">
         <img src=<%- "Image/" + data[i].image %>>
         <div class="info">
-            <p><%- data[i].name%></p>
+            <p class="info-title"><%- data[i].name%><p>
             <p><%- data[i].description %><br><br><b><%- data[i].price %>€</b></p>
             <% if (data[i].idUser===IDUSER){%>
                 <a href="/edit/<%= data[i].id%>"><input type="submit" class="button2" value="Edit"></a>
@@ -33,7 +33,6 @@
                     <input type="submit" name="laptop1" class="button2" value="Acheter">
                 </form>
                 <%}%>
-            <a href="details_product/<%=data[i].id%>"  ><input type="submit" name="laptop1" class="button2" value="Details"></a>
         </div>
     </div>
 <% } %>
