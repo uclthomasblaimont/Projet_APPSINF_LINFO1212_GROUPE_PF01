@@ -39,6 +39,7 @@ app.use(bodyParser.json());
 let db = require("./db")
 const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey, checkpoint, getHistoric,ToHistoric, getUser} = require("./db");
 const {updateMoney,updateProfils,getCategorie,getImage,getDescription} = require("./db");
+const {del} = require("express/lib/application");
 
 ///////////////////////////////////////////////////////////
 app.use(express.static('public'));
@@ -95,7 +96,11 @@ app.get("/register", (req, res) => {
 });
 app.get("/portefeuille", async (req, res) => {
     req.session.money = await getMoney(req.session.ID)
+<<<<<<< HEAD
     res.render("Portefeuille",{username:req.session.username, money:req.session.money,color:color});
+=======
+    res.render("portefeuille",{username:req.session.username, money:req.session.money});
+>>>>>>> 359af4d5c38f4cf62ce2d7a351b8334d605e8b0e
 });
 app.get("/Commandes", async (req, res)=>{
     let data;
@@ -177,6 +182,7 @@ app.post("/login",async (req,res)=>{ // async pour dire que fonction est asynchr
         }
     });
 });
+
 app.post("/portefeuille",async (req,res)=>{
     if (req.body.argent !== undefined && req.body.argent !=="") await updateMoney(req.session.ID, parseInt(req.body.argent)); // retire
     if (req.body.argent2 !== undefined && req.body.argent2 !=="") await updateMoney(req.session.ID, parseInt(req.body.argent2) * -1);
@@ -205,6 +211,7 @@ app.post("/add_product",upload.single("image"), async (req,res)=>{
     db.add_object(req.body.title,req.body.categorie, req.session.ID, req.body.price,req.body.description, req.file.filename);
     res.redirect("/");
 })
+<<<<<<< HEAD
 app.post("/Historique_achat",async (req,res)=>{
     res.redirect("/Historique_achat")
 })
@@ -213,6 +220,18 @@ app.post("/delete", async (req,res)=>{
     await deleteproduct(req.body.id)
     res.redirect("/")
 })
+=======
+
+
+app.post("/delete",async(req,res)=>{
+    console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+    console.log(req.body.id)
+    await deleteproduct(req.body.id)
+    res.redirect("/")
+
+})
+
+>>>>>>> 359af4d5c38f4cf62ce2d7a351b8334d605e8b0e
 app.post("/:id", async (req, res)=>{
     if (req.session.username !== undefined){
         if (req.session.money >= req.body.price) { // si assez d'argent
@@ -242,6 +261,14 @@ app.post("/:id", async (req, res)=>{
     else res.redirect("/login")
 })
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> 359af4d5c38f4cf62ce2d7a351b8334d605e8b0e
 //////////////////   Start server   //////////////////////////////////////////////////////////////
 https.createServer({
     key: fs.readFileSync('./key.pem'),
