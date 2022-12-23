@@ -105,7 +105,7 @@ Historic_achat.init({
         allowNull:false
     }
 },{sequelize,modelName:"Historic_achat"})
-
+sequelize.sync()
 async function getMoney(id) {
     return User.findOne({where: {id: id}, attributes: ["money"]}).then(mon => {
         if (mon) {
