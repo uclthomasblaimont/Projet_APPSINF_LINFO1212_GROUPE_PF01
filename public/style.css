@@ -176,9 +176,56 @@ body{
 
 
 
+/* add_ptoduct*/
+
+.content-login .login-container {
+    margin-bottom: 10%;
+
+}
+
+.content-login .login-container .form-group{
+    margin-bottom: 4%;
+    margin-right: 5%;
+}
+
+.content-login .login-container h2{
+    margin-left: 15%;
+    margin-bottom: 20%;
+}
 
 
+.content-login .login-container select{
+    margin-bottom: 4%;
+    margin-left: 20%;
+}
 
+.content-login .login-container [type=submit]{
+    width: 50%;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 7px 80px 7px 40px;
+    margin-top: 5%;
+    margin-left: 25%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.content-login .login-container .form-control{
+    width: 95%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10%;
+    margin-left: 10%;
+}
+
+.content-login .login-container label{
+    margin-left: 50%;
+    margin-bottom: 20%;
+}
 
 
 
@@ -296,10 +343,7 @@ body{
     width: 50%;
     background-color: cornflowerblue;
     color: white;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    padding-left: 30px;
-    padding-right: 90px;
+    padding: 7px 90px 7px 30px;
     margin-top: 5%;
     margin-left: 10%;
     border: none;
