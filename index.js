@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 let db = require("./db")
-const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey, checkpoint, getHistoric,ToHistoric} = require("./db");
+const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey, checkpoint, getHistoric,ToHistoric, getUser} = require("./db");
 const {updateMoney,updateProfils,getCategorie,getImage,getDescription} = require("./db");
 
 ///////////////////////////////////////////////////////////
@@ -94,7 +94,8 @@ app.get("/Commandes", async (req, res)=>{
 })
 
 app.get("/settingProfils",async (req, res)=>{
-    await res.render("settingProfils", {username:req.session.username, error3:req.session.error3});
+    const people = await getUser(req.session.username)
+    await res.render("settingProfils", {username:req.session.username,people:people, error3:req.session.error3});
 })
 app.get("/add_product",async (req,res)=>{
     res.render('add_product',{username:req.session.username});
