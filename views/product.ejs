@@ -19,7 +19,7 @@
             <p><%- data[i].description %><br><br><b><%- data[i].price %>€</b></p>
             <% if (data[i].idUser===IDUSER){%>
                 <a href="/edit/<%= data[i].id%>"><input type="submit" class="button2" value="Edit"></a>
-                <form action="/delete/<%- data[i].id%>" method="post">
+                <form action="/delete" method="post">
                     <input type="hidden" name="id" value="<%=data[i].id%>">
                     <input type="submit" name="delete" class="button2" value="Delete">
                 </form>

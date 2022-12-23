@@ -108,7 +108,7 @@ app.get("/details_product/:id", async(req,res)=>{
     }else {
         products = req.session.listOfProducts
     }
-    res.render("details_product",{data:products,position:req.params.id,username:req.session.username})
+    res.render("details_product",{products:products,position:req.params.id,username:req.session.username})
 });
 
 
@@ -219,12 +219,7 @@ app.post("/add_product",upload.single("image"), async (req,res)=>{
     res.redirect("/");
 })
 
-app.post("/delete",async (req,res)=>{
-    console.log(req.body.id)
-    await deleteproduct(req.body.id)
-    res.redirect("/")
-    // pas sûr de cette methode à revoir
-})
+
 
 
 app.post("/Historique_achat",async (req,res)=>{
@@ -261,6 +256,13 @@ app.post("/:id", async (req, res)=>{
     else res.redirect("/login")
 })
 
+
+
+app.post("/delete", async (req,res)=>{
+    console.log(req.body.id)
+    await deleteproduct(req.body.id)
+    res.redirect("/")
+})
 //////////////////   Start server   //////////////////////////////////////////////////////////////
 https.createServer({
     key: fs.readFileSync('./key.pem'),

@@ -394,40 +394,7 @@ module.exports= {
         // supprime le produit
     },
 
-    checkpoint: async function checkpoint(product,price_product,point,user){
 
-        // si pas déjà dans l'historique du user ? true : false
-        // si true alors on continue sinon on revoit un message d'erreur
-        if(point === 0){
-            console.log("portefeuille vide")
-            return false
-        }
-        if(point>=price_product){
-            point-=price_product;
-            User.update({money:point},{where:{id:userid}})// on reprend l'id du user
-            //updateMoney2()
-            // axel doit mettre l'id du user dans la fonction money 2
-
-            Historic_achat.create({
-
-                produit: product,
-                user:user
-
-
-                }).then(pro=>{
-                    console.log("Product added : "+pro)
-                return true
-            }).catch(err=>{
-                console.log("Error : "+err)
-                return false
-            })
-
-        }else{
-            console.log("pas assez d'argent cheh")
-            return false
-        }
-
-    },
 
     getHistoric: async function getHistoric(idAcheteur){
         return await Historic_achat.findAll({where:{[Op.or]: [{idAcheteur:idAcheteur},{idVendeur:idAcheteur}]}})
