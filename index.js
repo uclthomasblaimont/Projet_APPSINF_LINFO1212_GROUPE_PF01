@@ -109,8 +109,6 @@ app.get("/edit/:proid", async (req,res)=>{
 
 })
 
-
-
 ///////////////////  POST   ////////////////////////////////////////////////////////
 app.post("/",async (req,res)=>{
     const users = await db.getUser(req.session.username);
@@ -131,8 +129,6 @@ app.post("/edit", async (req,res)=>{
     await updateorder(id, name_product, description_product, price_product);
     res.redirect("/");
 })
-
-
 
 app.post("/register",async (req,res)=> {
     req.session.error1 = "";
@@ -190,7 +186,7 @@ app.post("/Commandes",async (req,res)=>{
 })
 app.post("/settingProfils",async (req, res)=>{
     req.session.error3 = ""
-    if (await db.getUser(req.body.newusername)){
+    if (await db.getUser(req.body.newusername) & req.session.username !== await db.getUser(req.body.newusername)){
         console.log("psuedo deja utilisé")
         req.session.error3 = "Pseudo déjà utilisé";
         res.redirect("/settingProfils")
