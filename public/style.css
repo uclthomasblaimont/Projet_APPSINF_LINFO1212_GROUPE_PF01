@@ -36,7 +36,7 @@ body{
     position: absolute;
     top: 20%;
     margin-bottom: 10px;
-    left: 95%;
+    left: 90%;
 }
 
 .container-menu .nav-wrapper .right-side a {
@@ -53,6 +53,14 @@ body{
 
 .left-side{
     display: flex;
+}
+
+.left-side .dropbtn{
+    float: left;
+}
+
+.left-side form{
+    float: right;
 }
 
 .nav-wrapper .left-side div{
