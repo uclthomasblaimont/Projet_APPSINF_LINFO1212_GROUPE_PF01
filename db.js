@@ -175,18 +175,18 @@ async function updateProfils(username, newusername, newpassword, newadresse){
     return User.findOne({where:{username:username}}).then(modif => {
         if(modif) {
             if (newpassword !== ""){
-                console.log("MAJ password")
                 const salt = bcrypt.genSaltSync(10)
                 const cryp_mdp = bcrypt.hashSync(newpassword, salt) // ache le mdp pour l'enregistrer
                 User.update({password:cryp_mdp}, {where: {username:username}})
+                console.log("MAJ password")
             }
             if (newadresse !== ""){
-                console.log("MAJ adresse")
                 User.update({adresse:newadresse}, {where: {username:username}})
+                console.log("MAJ adresse")
             }
             if (newusername !== ""){
-                console.log("MAJ username")
                 User.update({username:newusername}, {where: {username:username}})
+                console.log("MAJ username")
             }
             return true;
         }
