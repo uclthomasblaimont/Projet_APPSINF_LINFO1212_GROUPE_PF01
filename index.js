@@ -1,11 +1,8 @@
 // page du serveur
 const express = require('express');
-//const path = require("path");
-const ejs=require('ejs');
 const app = express();
 const bcrypt =require("bcrypt");
 const https = require("https");
-const {response} = require("express");
 const session =require("express-session");
 const fs = require("fs");
 const bodyParser =require("body-parser");
@@ -37,7 +34,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 let db = require("./db")
-const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey, checkpoint, getHistoric,ToHistoric, getUser} = require("./db");
+const {updateorder,deleteproduct, getID, getMoney,getProduct,checkKey, getHistoric,ToHistoric, getUser} = require("./db");
 const {updateMoney,updateProfils,getCategorie,getImage,getDescription} = require("./db");
 const {del} = require("express/lib/application");
 
@@ -97,11 +94,10 @@ app.get("/register", (req, res) => {
 app.get("/portefeuille", async (req, res) => {
     req.session.money = await getMoney(req.session.ID)
     res.render("Portefeuille",{username:req.session.username, money:req.session.money,color:color});
-    res.render("portefeuille",{username:req.session.username, money:req.session.money});
 });
 app.get("/Commandes", async (req, res)=>{
     let data;
-    data = await getHistoric(req.session.ID)// doit recuperer tt les objet acheté ou vendu
+    data = await getHistoric(req.session.ID)// doit recuperer tt les objets acheté ou vendu
     console.log(data)
     res.render("Commandes",{username:req.session.username,data:data,id:req.session.ID,color:color});
 })
@@ -123,7 +119,7 @@ app.post("/",async (req,res)=>{
 })
 app.post("/banner", async function(req, res){
     req.session.listOfProducts = await db.getProduct(req.body.recherche,req.body.categorieMenu)
-    res.redirect("/",color)
+    res.redirect("/")
 });
 app.post("/edit", async (req,res)=>{
     const name_product= req.body.title;
